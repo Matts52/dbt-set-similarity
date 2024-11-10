@@ -1,0 +1,24 @@
+name: "set_similarity_integration_tests"
+version: "1.0"
+config-version: 2
+
+profile: "integration_tests"
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["data"]
+macro-paths: ["macros"]
+
+target-path: "target"
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+seeds:
+  +schema: raw_data
+  +quote_columns: false
+
+models:
+  +schema: model_output
+  +quote_columns: false
