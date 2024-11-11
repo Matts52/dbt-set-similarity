@@ -35,9 +35,9 @@ Currently this package supports the Snowflake and Postgres adapters
 
 * [Installation Instructions](#installation-instructions)
 * [Methods](#methods)
-    * [dice_coef](#dice_coefficient)
-    * [jaccard_coef](#jaccard_coefficient)
-    * [overlap_coef](#overlap_coefficient)
+    * [dice_coef](#dice_coef)
+    * [jaccard_coef](#jaccard_coef)
+    * [overlap_coef](#overlap_coef)
 
 ----
 
