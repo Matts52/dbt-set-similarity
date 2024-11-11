@@ -1,0 +1,14 @@
+version: 2
+
+models:
+  - name: test_dice_coef
+    data_tests:
+      - assert_equal:
+          actual: actual
+          expected: expected
+
+  - name: test_jaccard_index
+    data_tests:
+      - assert_equal:
+          actual: actual
+          expected: expected

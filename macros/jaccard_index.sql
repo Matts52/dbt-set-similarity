@@ -4,7 +4,7 @@
 
 {% macro default__jaccard_index(column_one, column_two)  %}
 
-    -- numerator query
+    -- numerator query: intersection of two sets
     {% set numerator_query %}
         (
             SELECT 
@@ -17,7 +17,7 @@
         )::float 
     {% endset %}
 
-    -- denominator query
+    -- denominator query: union of two sets
     {% set denominator_query %}
         (
             SELECT 
