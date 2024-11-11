@@ -1,0 +1,35 @@
+version: 2
+
+macros:
+  - name: dice_coef
+    description: |
+      This macro calculates the Dice coefficient, a similarity measure that compares the overlap between two sets by evaluating the ratio of their intersection to the sum of their sizes. The result ranges from 0 (no overlap) to 1 (identical sets), with common elements given double weight.
+    arguments:
+      - name: column_one
+        type: string
+        description: Name of the first field or transformation that contains the first set of data to compare.
+      - name: column_two
+        type: string
+        description: Name of the second field or transformation that contains the second set of data to compare.
+
+  - name: jaccard_coef
+    description: |
+      This macro calculates the Jaccard coefficient, a similarity measure that quantifies the similarity between two sets by evaluating the ratio of their intersection to their union. The result ranges from 0 (no overlap) to 1 (identical sets), measuring how similar two sets are based on the proportion of shared elements relative to the total number of distinct elements in both sets.
+    arguments:
+      - name: column_one
+        type: string
+        description: Name of the first field or transformation that contains the first set of data to compare.
+      - name: column_two
+        type: string
+        description: Name of the second field or transformation that contains the second set of data to compare.
+
+  - name: overlap_coef
+    description: |
+      This macro calculates the Overlap coefficient, a similarity measure that compares the overlap between two sets by evaluating the ratio of their intersection to the size of the smaller set. The result ranges from 0 (no overlap) to 1 (identical sets), focusing on how much the two sets share relative to the size of the smaller set.
+    arguments:
+      - name: column_one
+        type: string
+        description: Name of the first field or transformation that contains the first set of data to compare.
+      - name: column_two
+        type: string
+        description: Name of the second field or transformation that contains the second set of data to compare.
