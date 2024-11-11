@@ -4,7 +4,6 @@
 
 {% macro default__dice_coef(column_one, column_two)  %}
 
-
     -- numerator query: 2 * intersection count
     {% set numerator_query %}
         (
@@ -36,5 +35,43 @@
     -- safe divide the two
     {{ dbt_utils.safe_divide(numerator_query, denominator_query) }}
 
+{% endmacro %}
+
+{% macro default__dice_coef(column_one, column_two) %}
+
+    -- numerator query: 2 * intersection count
+    {% set numerator_query %}
+        (
+            2 * (
+                SELECT 
+                    COUNT(DISTINCT value) AS intersection_count
+                FROM (
+                    SELECT VALUE AS value
+                    FROM TABLE(FLATTEN(INPUT => {{ column_one }}))
+                    INTERSECT
+                    SELECT VALUE AS value
+                    FROM TABLE(FLATTEN(INPUT => {{ column_two }}))
+                ) AS intersection
+            )
+        )::FLOAT
+    {% endset %}
+
+    -- denominator query: cardinality of column_one + cardinality of column_two
+    {% set denominator_query %}
+        (
+            SELECT 
+                COUNT(value) AS total_count
+            FROM (
+                SELECT VALUE AS value
+                FROM TABLE(FLATTEN(INPUT => {{ column_one }}))
+                UNION ALL
+                SELECT VALUE AS value
+                FROM TABLE(FLATTEN(INPUT => {{ column_two }}))
+            ) AS union_all_set
+        )::FLOAT
+    {% endset %}
+
+    -- safe divide the two
+    {{ dbt_utils.safe_divide(numerator_query, denominator_query) }}
 
 {% endmacro %}
