@@ -37,7 +37,7 @@
 
 {% endmacro %}
 
-{% macro default__dice_coef(column_one, column_two) %}
+{% macro snowflake__dice_coef(column_one, column_two) %}
 
     -- numerator query: 2 * intersection count
     {% set numerator_query %}
