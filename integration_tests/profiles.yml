@@ -8,5 +8,5 @@ integration_tests:
       pass: password
       port: 5432
       dbname: test_database
-      schema: correlate_integration_tests_postgres
+      schema: set_similarity_integration_tests_postgres
       threads: 1
