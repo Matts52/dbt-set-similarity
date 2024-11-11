@@ -1,8 +1,8 @@
-{% macro jaccard_index(column_one, column_two) %}
-    {{ return(adapter.dispatch('jaccard_index', 'dbt_set_similarity')(column_one, column_two)) }}
+{% macro jaccard_coef(column_one, column_two) %}
+    {{ return(adapter.dispatch('jaccard_coef', 'dbt_set_similarity')(column_one, column_two)) }}
 {% endmacro %}
 
-{% macro default__jaccard_index(column_one, column_two)  %}
+{% macro default__jaccard_coef(column_one, column_two)  %}
 
     -- numerator query: intersection of two sets
     {% set numerator_query %}
@@ -35,7 +35,7 @@
 
 {% endmacro %}
 
-{% macro snowflake__jaccard_index(column_one, column_two) %}
+{% macro snowflake__jaccard_coef(column_one, column_two) %}
 
     -- numerator query
     {% set numerator_query %}

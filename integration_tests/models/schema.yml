@@ -7,7 +7,7 @@ models:
           actual: actual
           expected: expected
 
-  - name: test_jaccard_index
+  - name: test_jaccard_coef
     data_tests:
       - assert_equal:
           actual: actual
