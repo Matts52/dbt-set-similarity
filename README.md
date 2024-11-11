@@ -2,6 +2,7 @@ This [dbt](https://github.com/dbt-labs/dbt) package contains macros that can be 
 
 Note:
 - Currently, only methods for unordered distinct item sets are supported. I.e. methods for sequence or vector similarity are not included in this package
+- Input fields to all function are expected to be array/variant type
 - All methods in this package are meant to be used inline within a select statement.
 
 **Current supported/tested databases include:**
