@@ -47,8 +47,10 @@ Currently this package supports the Snowflake and Postgres adapters
 
 The Dice coefficient (also known as the Sørensen-Dice index) is a similarity measure that compares the overlap between two sets by considering the ratio of their intersection to the sum of their sizes. It is defined as:
 
-$$Dice(A,B) = \frac{2 * |A \cap B |}{|A| + |B|}$$
+$$Dice(A,B) = \frac{2 * |A \cap B |}{|A| + |B|}
+$$
 ​
+
 This coefficient ranges from 0 (no overlap) to 1 (identical sets), giving double weight to common elements. It is especially useful for comparing sets with binary or categorical elements, where the goal is to quantify how similar two sets are based on their shared elements.
 
 **Args:**
