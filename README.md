@@ -1,6 +1,6 @@
 This [dbt](https://github.com/dbt-labs/dbt) package contains macros that can be (re)used across dbt projects.
 
-Notes:
+Note:
 - Currently, only methods for unordered distinct item sets are supported. I.e. methods for sequence or vector similarity are not included in this package
 - All methods in this package are meant to be used inline within a select statement.
 
@@ -73,9 +73,11 @@ This coefficient ranges from 0 (no overlap) to 1 (identical sets), giving double
 
 The Jaccard coefficient (also known as the Jaccard index) is a similarity measure that quantifies the similarity between two sets based on the ratio of their intersection to their union. It is defined as:
 
+
 $$
 Jaccard(A,B) = \frac{|A \cap B |}{|A \cup B|}
 $$
+
 
 This coefficient ranges from 0 (no overlap) to 1 (identical sets), indicating how similar two sets are by comparing the number of shared elements relative to the total distinct elements in both sets.
 
