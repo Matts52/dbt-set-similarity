@@ -33,3 +33,19 @@ macros:
       - name: column_two
         type: string
         description: Name of the second field or transformation that contains the second set of data to compare.
+
+  - name: tversky_coef
+    description: This macro calculates the Tversky Index, a similarity measure that generalizes the overlap between two sets with adjustable weights for asymmetric differences. It evaluates the ratio of the intersection of two sets to a weighted sum that includes elements unique to each set. The result ranges from 0 (no similarity) to 1 (identical sets), allowing flexibility to emphasize specific differences between sets. This measure is useful when comparing sets of different sizes or when focusing on unique elements in each set.
+    arguments:
+      - name: column_one
+        type: string
+        description: Name of the first field or transformation that contains the first set of data to compare.
+      - name: column_two
+        type: string
+        description: Name of the second field or transformation that contains the second set of data to compare.
+      - name: alpha
+        type: float
+        description: Weight for elements unique to `column_one`. Adjusts the importance of unique elements in the first set. Default is 0.5
+      - name: beta
+        type: float
+        description: Weight for elements unique to `column_two`. Adjusts the importance of unique elements in the second set. Default is 0.5

@@ -38,6 +38,7 @@ Currently this package supports the Snowflake and Postgres adapters
     * [dice_coef](#dice_coef)
     * [jaccard_coef](#jaccard_coef)
     * [overlap_coef](#overlap_coef)
+    * [tversky_coef](#tversky_coef)
 
 ----
 
@@ -119,6 +120,38 @@ This coefficient ranges from 0 (no overlap) to 1 (identical sets), focusing on h
 {{ dbt_set_similarity.overlap_coef(
     column_one='first_set_of_items',
     column_two='second_set_of_items',
+   )
+}}
+```
+
+### tversky_coef
+([source](macros/tversky_coef.sql))
+
+The Tversky Index is a similarity measure that generalizes the overlap between two sets, allowing for adjustable weights on asymmetric differences between the sets. It is defined as:
+
+$$
+Tversky(A,B) = \frac{|A \cap B |}{|A \cap B | + \alpha |A - B| + \beta |B - A|}
+$$
+
+where $|A - B|$ denotes the relative complement of A in B
+
+This coefficient ranges from 0 (no similarity) to 1 (identical sets) and is especially useful when comparing sets of different sizes or when wanting to emphasize specific asymmetries between the sets.
+
+**Args:**
+
+- `column_one` (required): Name of the first field or relevant SQL transormation to use
+- `column_two` (required): Name of the second field or relevant SQL transormation to use
+- `alpha` (optional): Weight for elements unique to A. Default is 0.5
+- `beta` (optional): Weight for elements unique to B. Default is 0.5
+
+**Usage:**
+
+```sql
+{{ dbt_set_similarity.overlap_coef(
+    column_one='first_set_of_items',
+    column_two='second_set_of_items',
+    alpha=0.75,
+    beta=0.25,
    )
 }}
 ```

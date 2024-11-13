@@ -18,3 +18,9 @@ models:
       - assert_equal:
           actual: actual
           expected: expected
+
+  - name: test_tversky_coef
+    data_tests:
+      - assert_equal:
+          actual: actual
+          expected: expected
