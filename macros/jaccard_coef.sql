@@ -4,66 +4,6 @@
 
 {% macro default__jaccard_coef(column_one, column_two)  %}
 
-    -- numerator query: intersection of two sets
-    {% set numerator_query %}
-        (
-            SELECT 
-                COUNT(DISTINCT value) AS intersection_count
-            FROM (
-                SELECT UNNEST({{ column_one }}) AS value
-                INTERSECT
-                SELECT UNNEST({{ column_two }}) AS value
-            ) AS intersection
-        )::float 
-    {% endset %}
-
-    -- denominator query: union of two sets
-    {% set denominator_query %}
-        (
-            SELECT 
-                COUNT(DISTINCT value) AS union_count
-            FROM (
-                SELECT UNNEST({{ column_one }}) AS value
-                UNION
-                SELECT UNNEST({{ column_two }}) AS value
-            ) AS union_set
-        )::float
-    {% endset %}
-
-    -- safe divide the two
-    {{ dbt_utils.safe_divide(numerator_query, denominator_query) }}
-
-{% endmacro %}
-
-{% macro snowflake__jaccard_coef(column_one, column_two) %}
-
-    -- numerator query
-    {% set numerator_query %}
-        (
-            SELECT 
-                COUNT(DISTINCT value) AS intersection_count
-            FROM (
-                SELECT value FROM TABLE(FLATTEN(INPUT => {{ column_one }})) AS col_one
-                INTERSECT
-                SELECT value FROM TABLE(FLATTEN(INPUT => {{ column_two }})) AS col_two
-            ) AS intersection
-        )::float 
-    {% endset %}
-
-    -- denominator query
-    {% set denominator_query %}
-        (
-            SELECT 
-                COUNT(DISTINCT value) AS union_count
-            FROM (
-                SELECT value FROM TABLE(FLATTEN(INPUT => {{ column_one }})) AS col_one
-                UNION
-                SELECT value FROM TABLE(FLATTEN(INPUT => {{ column_two }})) AS col_two
-            ) AS union_set
-        )::float
-    {% endset %}
-
-    -- safe divide the two
-    {{ dbt_utils.safe_divide(numerator_query, denominator_query) }}
+    {{ dbt_set_similarity.tversky_coef(column_one, column_two, alpha=1, beta=1) }}
 
 {% endmacro %}
