@@ -57,8 +57,8 @@ This coefficient ranges from 0 (no overlap) to 1 (identical sets), giving double
 
 **Args:**
 
-- `column_one` (required): Name of the first field or relevant SQL transormation to use
-- `column_two` (required): Name of the second field or relevant SQL transormation to use
+- `column_one` (required): Name of the first field or relevant SQL transformation to use holding the array/set
+- `column_two` (required): Name of the second field or relevant SQL transformation to use holding the array/set
 
 **Usage:**
 
@@ -85,8 +85,8 @@ This coefficient ranges from 0 (no overlap) to 1 (identical sets), indicating ho
 
 **Args:**
 
-- `column_one` (required): Name of the first field or relevant SQL transormation to use
-- `column_two` (required): Name of the second field or relevant SQL transormation to use
+- `column_one` (required): Name of the first field or relevant SQL transformation to use holding the array/set
+- `column_two` (required): Name of the second field or relevant SQL transformation to use holding the array/set
 
 **Usage:**
 
@@ -111,8 +111,8 @@ This coefficient ranges from 0 (no overlap) to 1 (identical sets), focusing on h
 
 **Args:**
 
-- `column_one` (required): Name of the first field or relevant SQL transormation to use
-- `column_two` (required): Name of the second field or relevant SQL transormation to use
+- `column_one` (required): Name of the first field or relevant SQL transformation to use holding the array/set
+- `column_two` (required): Name of the second field or relevant SQL transformation to use holding the array/set
 
 **Usage:**
 
@@ -139,8 +139,8 @@ This coefficient ranges from 0 (no similarity) to 1 (identical sets) and is espe
 
 **Args:**
 
-- `column_one` (required): Name of the first field or relevant SQL transormation to use
-- `column_two` (required): Name of the second field or relevant SQL transormation to use
+- `column_one` (required): Name of the first field or relevant SQL transformation to use
+- `column_two` (required): Name of the second field or relevant SQL transformation to use
 - `alpha` (optional): Weight for elements unique to A. Default is 0.5
 - `beta` (optional): Weight for elements unique to B. Default is 0.5
 
