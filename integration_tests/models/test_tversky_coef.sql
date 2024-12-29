@@ -1,3 +1,5 @@
+{% set adapter = target.type %}
+
 with data_tversky_coef as (
     select
         {% if adapter == 'postgres' %}
