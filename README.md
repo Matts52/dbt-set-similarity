@@ -8,6 +8,16 @@ Note:
 **Current supported/tested databases include:**
 - Postgres
 - Snowflake
+- DuckDB
+
+
+| **Method**        | **Postgres** | **Snowflake** | **DuckDB** |
+|---------------------|--------------|---------------|------------|
+| **dice_coef**       | ✅           | ✅             | ✅          |
+| **jaccard_coef**    | ✅           | ✅             | ✅          |
+| **overlap_coef**    | ✅           | ✅             | ✅          |
+| **tversky_coef**    | ✅           | ✅             | ✅          |
+
 
 ## Installation Instructions
 
