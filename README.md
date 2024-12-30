@@ -26,7 +26,7 @@ To import this package into your dbt project, add the following to either the `p
 ```
 packages:
   - package: "Matts52/dbt_set_similarity"
-    version: [">=0.1.0"]
+    version: [">=0.2.0"]
 ```
 
 and run a `dbt deps` command to install the package to your project.
