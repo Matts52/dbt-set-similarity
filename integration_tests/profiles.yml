@@ -17,3 +17,15 @@ integration_tests_duckdb:
     dev:
       type: duckdb
       path: "../duckdb/test_database.duckdb"
+
+integration_tests_mysql:
+  target: mysql
+  outputs:
+    mysql:
+      type: mysql
+      server: localhost
+      port: 3306
+      schema: set_similarity_integration_tests_mysql
+      username: user
+      password: password
+      ssl_disabled: True

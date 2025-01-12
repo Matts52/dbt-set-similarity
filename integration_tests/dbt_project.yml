@@ -2,7 +2,7 @@ name: "set_similarity_integration_tests"
 version: "1.0"
 config-version: 2
 
-profile: "integration_tests_duckdb"
+profile: "integration_tests_mysql"
 
 model-paths: ["models"]
 analysis-paths: ["analyses"]
