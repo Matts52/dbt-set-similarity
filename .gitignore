@@ -3,5 +3,6 @@ target/
 dbt_packages/
 logs/
 duckdb/
+sqlite/
 
 .DS_store
