@@ -59,63 +59,48 @@
 
 {% macro snowflake__tversky_coef(column_one, column_two, alpha, beta) %}
 
-    -- numerator query: intersection of two sets
+    -- numerator: intersection size
     {% set numerator_query %}
         (
-            SELECT 
-                COUNT(DISTINCT value) AS intersection_count
-            FROM (
-                SELECT VALUE
-                FROM TABLE(FLATTEN(INPUT => {{ column_one }})) AS a
-                INTERSECT
-                SELECT VALUE
-                FROM TABLE(FLATTEN(INPUT => {{ column_two }})) AS b
-            ) AS intersection
-        )::float
+            ARRAY_SIZE(
+                ARRAY_INTERSECTION({{ column_one }}, {{ column_two }})
+            )::FLOAT
+        )
     {% endset %}
 
-    -- denominator query: weighted Tversky formula
+    -- intersection size (reused in denominator)
+    {% set intersection_query %}
+        ARRAY_SIZE(
+            ARRAY_INTERSECTION({{ column_one }}, {{ column_two }})
+        )
+    {% endset %}
+
+    -- elements only in column_one (A - B)
+    {% set only_in_a_query %}
+        (
+            ARRAY_SIZE({{ column_one }})
+            - {{ intersection_query }}
+        )
+    {% endset %}
+
+    -- elements only in column_two (B - A)
+    {% set only_in_b_query %}
+        (
+            ARRAY_SIZE({{ column_two }})
+            - {{ intersection_query }}
+        )
+    {% endset %}
+
+    -- denominator: weighted sum
     {% set denominator_query %}
         (
-            -- intersection
-            SELECT COUNT(DISTINCT value) 
-            FROM (
-                SELECT VALUE
-                FROM TABLE(FLATTEN(INPUT => {{ column_one }})) AS a
-                INTERSECT
-                SELECT VALUE
-                FROM TABLE(FLATTEN(INPUT => {{ column_two }})) AS b
-            ) AS intersection
-        )::float
-
-        +
-
-        -- elements in column_one only (A - B)
-        (SELECT {{ alpha }} * COUNT(DISTINCT value)
-         FROM (
-             SELECT VALUE
-             FROM TABLE(FLATTEN(INPUT => {{ column_one }})) AS a
-             MINUS
-             SELECT VALUE
-             FROM TABLE(FLATTEN(INPUT => {{ column_two }})) AS b
-         ) AS only_in_a
-        )::float
-
-        +
-
-        -- elements in column_two only (B - A)
-        (SELECT {{ beta }} * COUNT(DISTINCT value)
-         FROM (
-             SELECT VALUE
-             FROM TABLE(FLATTEN(INPUT => {{ column_two }})) AS b
-             MINUS
-             SELECT VALUE
-             FROM TABLE(FLATTEN(INPUT => {{ column_one }})) AS a
-         ) AS only_in_b
-        )::float
+            {{ intersection_query }}::FLOAT
+            + {{ alpha }} * {{ only_in_a_query }}::FLOAT
+            + {{ beta }} * {{ only_in_b_query }}::FLOAT
+        )
     {% endset %}
 
-    -- safe divide the two if they are eligible sets, do not if they are not
+    -- final Tversky coefficient
     {{ dbt_utils.safe_divide(numerator_query, denominator_query) }}
 
 {% endmacro %}

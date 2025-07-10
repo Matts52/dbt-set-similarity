@@ -34,32 +34,26 @@
 
 {% macro snowflake__overlap_coef(column_one, column_two) %}
 
-    -- numerator query: intersection count |A ∩ B|
+    -- numerator: size of intersection
     {% set numerator_query %}
         (
-            SELECT 
-                COUNT(DISTINCT value) AS intersection_count
-            FROM (
-                SELECT VALUE AS value
-                FROM TABLE(FLATTEN(INPUT => {{ column_one }}))
-                INTERSECT
-                SELECT VALUE AS value
-                FROM TABLE(FLATTEN(INPUT => {{ column_two }}))
-            ) AS intersection
-        )::FLOAT
+            ARRAY_SIZE(
+                ARRAY_INTERSECTION({{ column_one }}, {{ column_two }})
+            )::FLOAT
+        )
     {% endset %}
 
-    -- denominator query: minimum of the sizes of column_one and column_two
+    -- denominator: minimum size of the two arrays
     {% set denominator_query %}
         (
             LEAST(
-                (SELECT COUNT(DISTINCT VALUE) FROM TABLE(FLATTEN(INPUT => {{ column_one }}))),
-                (SELECT COUNT(DISTINCT VALUE) FROM TABLE(FLATTEN(INPUT => {{ column_two }})))
-            )
-        )::FLOAT
+                ARRAY_SIZE({{ column_one }}),
+                ARRAY_SIZE({{ column_two }})
+            )::FLOAT
+        )
     {% endset %}
 
-    -- safe divide the two
+    -- final overlap coefficient: |A ∩ B| / min(|A|, |B|)
     {{ dbt_utils.safe_divide(numerator_query, denominator_query) }}
 
 {% endmacro %}
